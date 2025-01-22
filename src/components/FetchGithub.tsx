@@ -53,7 +53,7 @@ const FetchGithub: React.FC<{ username: string }> = ({ username }) => {
   async function fetchGitHubRepos(username: string): Promise<Repo[]> {
     try {
       const response = await fetch(
-        `http://185.185.43.58:3000/api/github/repos?username=${username}`
+        `https://api.hygoww.fr/api/github/repos?username=${username}`
       );
       const data = await response.json();
       return data;
@@ -71,7 +71,7 @@ const FetchGithub: React.FC<{ username: string }> = ({ username }) => {
   ): Promise<Commit[]> {
     try {
       const response = await fetch(
-        `http://185.185.43.58:3000/api/github/commits?owner=${owner}&repo=${repo}`
+        `https://api.hygoww.fr/api/github/commits?owner=${owner}&repo=${repo}`
       );
       if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des commits`);
@@ -99,7 +99,7 @@ const FetchGithub: React.FC<{ username: string }> = ({ username }) => {
   ): Promise<{ [key: string]: number }> {
     try {
       const response = await fetch(
-        `http://185.185.43.58:3000/api/github/languages?owner=${owner}&repo=${repo}`
+        `https://api.hygoww.fr/api/github/languages?owner=${owner}&repo=${repo}`
       );
       if (!response.ok) {
         throw new Error(`Erreur lors de la récupération des langages`);
@@ -173,10 +173,13 @@ const FetchGithub: React.FC<{ username: string }> = ({ username }) => {
             key={repo.id}
             className="bg-white p-4 rounded shadow hover:shadow-lg transition"
           >
-            <h3 className="text-2xl font-semibold mb-2">{repo.name}</h3>
-            <p className="text-xs text-gray-500">
-              ⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}
-            </p>
+            <h3 className="text-2xl font-semibold mb-2 gap-2 flex items-center">
+              {repo.name}
+              <p className="text-xs text-gray-500">
+                ⭐ {repo.stargazers_count} | 🍴 {repo.forks_count}
+              </p>
+            </h3>
+
             <p className="text-gray-600 mb-3">
               {repo.description || 'Pas de description disponible.'}
             </p>

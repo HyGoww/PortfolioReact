@@ -19,7 +19,7 @@ const App = () => {
         </h2>
       </div>
       <FetchGithub username="HyGoww" />
-      <FormRegister />
+      <Footer />
     </div>
   );
 };
