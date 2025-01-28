@@ -9,7 +9,7 @@ const Navbar = () => {
   });
 
   return (
-    <nav className="w-full h-20 bg-blue-50 shadow-sm fixed z-50 flex items-center justify-between px-4 md:px-8">
+    <nav className="w-full h-20 bg-stone-50 shadow-sm fixed z-50 flex items-center justify-between px-4 md:px-8">
       <div className="flex items-center">
         <img
           src="/public/moi.png"

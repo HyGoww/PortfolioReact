@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { motion, useScroll } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion } from 'motion/react';
 import { useSpring, animated } from '@react-spring/web';
 
 const HeroSection = () => {
@@ -9,24 +9,15 @@ const HeroSection = () => {
   const rsImgRef = useRef<(HTMLImageElement | null)[]>([]);
   const rs = ['LinkedIn', 'GitHub'];
 
-  const [initialCoords, setInitialCoords] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
-  useLayoutEffect(() => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setInitialCoords({ x: rect.left, y: rect.top });
-    }
-  }, []);
-
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!buttonRef.current) return;
 
     const rect = buttonRef.current.getBoundingClientRect();
+    // récupérer le centre du bouton
     const buttonCenterX = rect.left + rect.width / 2;
     const buttonCenterY = rect.top + rect.height / 2;
 
+    // différence entre la souris du client et le centre du bouton * la vélocité
     const deltaX = (e.clientX - buttonCenterX) * 0.7;
     const deltaY = (e.clientY - buttonCenterY) * 0.7;
 
@@ -34,18 +25,18 @@ const HeroSection = () => {
   };
 
   return (
-    <section id="home" className="bg-blue-50">
+    <section id="home" className="bg-stone-50">
       <div className="">
         <div className="grid grid-rows-2 lg:grid-cols-2 pt-36 items-center">
           <div className="w-full flex flex-col items-center h-96">
             <div className="flex flex-col text-wrap">
-              <h1 className="text-6xl font-medium text-blue-950">
+              <h1 className="text-center md:text-start text-6xl font-medium text-blue-950">
                 Moi c'est Hugo
               </h1>
-              <h2 className="text-4xl mt-1 text-blue-900">
+              <h2 className="px-4 text-center md:px-0 md:text-start text-4xl mt-1 text-blue-900">
                 et ça c'est mon portfolio
               </h2>
-              <p className="mt-3 w-96 font-light text-zinc-500">
+              <p className="px-4 md:px-0 mt-3 w-96 font-light text-zinc-500">
                 Je suis un jeune développeur français passionné par le web, avec
                 une envie particulière de me spécialiser dans le développement
                 front-end. J'aime créer des interfaces modernes, élégantes et
@@ -56,23 +47,33 @@ const HeroSection = () => {
               <div className="flex flex-row items-center mt-11 relative">
                 <animated.button
                   ref={buttonRef}
-                  className="bg-blue-800 px-8 py-4 font-light text-xl rounded-lg text-blue-100 shadow-lg hover:bg-blue-900 absolute"
+                  className="bg-blue-800 px-8 py-4 font-light text-xl rounded-lg text-blue-100 shadow-lg hover:bg-blue-900 absolute mx-4 md:mx-0"
                   style={{
                     ...springStyles,
-                    zIndex: '40', // Appliquer l'animation dynamique ici
+                    zIndex: '40',
                   }}
                   onMouseMove={handleMouseMove}
                 >
                   Le CV est derrière
                 </animated.button>
                 <a href="">
-                  <div className="bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center ml-4 mr-2">
+                  <motion.div
+                    className="bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center ml-4 mr-2"
+                    animate={{
+                      opacity: [1, 0.7, 1],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: 'easeOut',
+                    }}
+                  >
                     <img
                       src="public/dl.png"
                       className="w-4 h-4 invert brightness-0"
                       alt=""
                     />
-                  </div>
+                  </motion.div>
                 </a>
 
                 <button className="text-zinc-500 font-light hover:text-blue-500"></button>
@@ -80,12 +81,12 @@ const HeroSection = () => {
 
               <div className="w-full mt-12">
                 <div className="flex flex-row relative items-center">
-                  <h3 className="text-zinc-500/80 font-light ">
+                  <h3 className="text-zinc-500/80 font-light px-4 md:px-0">
                     Le site a été fait avec
                   </h3>
                   <div className="bg-zinc-400 w-1/12 h-0.5 rounded-sm mx-3"></div>
                 </div>
-                <div className="flex flex-row mt-4 gap-6">
+                <div className="flex flex-row mt-4 gap-6 px-4 md:px-0">
                   <img src="public/html.png" alt="" className="w-14 h-14" />
                   <img src="public/tailwind.png" alt="" className="w-14 h-14" />
                   <img
@@ -142,7 +143,7 @@ const HeroSection = () => {
       </div>
 
       <div className="grid grid-rows-2 lg:grid-cols-2">
-        <div className="w-full h-auto flex flex-col items-center">
+        <div className="w-full h-auto flex flex-col items-center px-4 md:px-0">
           <h3 className="text-blue-950 font-semibold text-5xl">
             <span className="text-blue-400 text-2xl font-medium drop-shadow-md">
               A PROPOS
@@ -166,7 +167,7 @@ const HeroSection = () => {
             comme LinkedIn ou GitHub !
           </p>
 
-          <div className="my-8 flex flex-row gap-6">
+          <div className="my-8 flex flex-row gap-10">
             {rs.map((rs, index) => {
               const img = 'public/' + rs + '.png';
               return (
@@ -193,7 +194,7 @@ const HeroSection = () => {
                   <img
                     ref={(el) => (rsImgRef.current[index] = el)}
                     src={img}
-                    className="h-12 w-12 hidden"
+                    className="h-14 w-14 hidden"
                     key={index + 1}
                   />
                   <button

@@ -1,9 +1,9 @@
 const ProjectCard = () => {
   return (
     <section id="project">
-      <div className="bg-blue-950 h-auto flex flex-col relative shadow-xl">
+      <div className="bg-stone-900 h-auto flex flex-col relative shadow-xl">
         <div className="w-auto sm:w-1/2 mt-20 ml-20">
-          <h2 className="text-blue-700 font-semibold text-2xl">MES PROJETS</h2>
+          <h2 className="text-stone-400 font-semibold text-2xl">MES PROJETS</h2>
 
           <h3 className="mt-3 font-semibold text-zinc-100 text-2xl sm:text-4xl">
             Les différents projets que j'ai pu réaliser dans ma vie
@@ -28,9 +28,6 @@ const ProjectCard = () => {
               >
                 En savoir plus
               </a>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-110">
-                test
-              </button>
             </div>
           </div>
 
