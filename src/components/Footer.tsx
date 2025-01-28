@@ -108,7 +108,7 @@ const Footer = () => {
             <li>
               <a href="">
                 <motion.img
-                  src="public/git.png"
+                  src="public/github.png"
                   alt="Image Git"
                   className="h-8 w-8 sm:h-10 sm:w-10 filter invert brightness-100"
                   whileHover={{ x: '0.6rem', rotate: 25 }}

@@ -5,6 +5,9 @@ import { useSpring, animated } from '@react-spring/web';
 const HeroSection = () => {
   const [springStyles, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const rsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const rsImgRef = useRef<(HTMLImageElement | null)[]>([]);
+  const rs = ['LinkedIn', 'GitHub'];
 
   const [initialCoords, setInitialCoords] = useState<{
     x: number;
@@ -163,13 +166,46 @@ const HeroSection = () => {
             comme LinkedIn ou GitHub !
           </p>
 
-          <div className="my-8 flex flex-row gap-2">
-            <button className="py-2 px-4 rounded-full bg-transparent border-2 hover:bg-blue-800">
-              LinkedIn
-            </button>
-            <button className="py-2 px-4 rounded-full bg-transparent border-2 hover:bg-blue-800">
-              GitHub
-            </button>
+          <div className="my-8 flex flex-row gap-6">
+            {rs.map((rs, index) => {
+              const img = 'public/' + rs + '.png';
+              return (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.2 }}
+                  onMouseEnter={() => {
+                    if (rsRef.current[index]) {
+                      rsRef.current[index].classList.add('hidden');
+                    }
+                    if (rsImgRef.current[index]) {
+                      rsImgRef.current[index].classList.remove('hidden');
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (rsRef.current[index]) {
+                      rsRef.current[index].classList.remove('hidden');
+                    }
+                    if (rsImgRef.current[index]) {
+                      rsImgRef.current[index].classList.add('hidden');
+                    }
+                  }}
+                >
+                  <img
+                    ref={(el) => (rsImgRef.current[index] = el)}
+                    src={img}
+                    className="h-12 w-12 hidden"
+                    key={index + 1}
+                  />
+                  <button
+                    ref={(el) => (rsRef.current[index] = el)}
+                    key={index + 2}
+                    className="py-2 px-4 rounded-full bg-transparent border-2 hover:bg-blue-800"
+                  >
+                    {rs}
+                  </button>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
