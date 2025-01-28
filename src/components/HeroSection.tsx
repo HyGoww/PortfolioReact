@@ -1,6 +1,35 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { motion, useScroll } from 'motion/react';
+import { useSpring, animated } from '@react-spring/web';
 
 const HeroSection = () => {
+  const [springStyles, setSpring] = useSpring(() => ({ x: 0, y: 0 }));
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const [initialCoords, setInitialCoords] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  useLayoutEffect(() => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setInitialCoords({ x: rect.left, y: rect.top });
+    }
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!buttonRef.current) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
+    const buttonCenterX = rect.left + rect.width / 2;
+    const buttonCenterY = rect.top + rect.height / 2;
+
+    const deltaX = (e.clientX - buttonCenterX) * 0.7;
+    const deltaY = (e.clientY - buttonCenterY) * 0.7;
+
+    setSpring({ x: deltaX, y: deltaY });
+  };
+
   return (
     <section id="home" className="bg-blue-50">
       <div className="">
@@ -16,25 +45,34 @@ const HeroSection = () => {
               <p className="mt-3 w-96 font-light text-zinc-500">
                 Je suis un jeune développeur français passionné par le web, avec
                 une envie particulière de me spécialiser dans le développement
-                front-end. J’aime créer des interfaces modernes, élégantes et
-                intuitives, en mettant l’expérience utilisateur au cœur de mes
+                front-end. J'aime créer des interfaces modernes, élégantes et
+                intuitives, en mettant l'expérience utilisateur au cœur de mes
                 projets.
               </p>
 
-              <div className="flex flex-row items-center mt-11">
-                <button className="bg-blue-800 px-8 py-4 font-light text-xl rounded-lg text-blue-100 shadow-lg hover:bg-blue-900">
-                  Get Started
-                </button>
-                <div className="bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center ml-4 mr-2">
-                  <img
-                    src="public/dl.png"
-                    className="w-4 h-4 invert brightness-0"
-                    alt=""
-                  />
-                </div>
-                <button className="text-zinc-500 font-light hover:text-blue-500">
-                  Télécharger mon CV
-                </button>
+              <div className="flex flex-row items-center mt-11 relative">
+                <animated.button
+                  ref={buttonRef}
+                  className="bg-blue-800 px-8 py-4 font-light text-xl rounded-lg text-blue-100 shadow-lg hover:bg-blue-900 absolute"
+                  style={{
+                    ...springStyles,
+                    zIndex: '40', // Appliquer l'animation dynamique ici
+                  }}
+                  onMouseMove={handleMouseMove}
+                >
+                  Le CV est derrière
+                </animated.button>
+                <a href="">
+                  <div className="bg-blue-800 rounded-full w-6 h-6 flex items-center justify-center ml-4 mr-2">
+                    <img
+                      src="public/dl.png"
+                      className="w-4 h-4 invert brightness-0"
+                      alt=""
+                    />
+                  </div>
+                </a>
+
+                <button className="text-zinc-500 font-light hover:text-blue-500"></button>
               </div>
 
               <div className="w-full mt-12">
@@ -48,7 +86,7 @@ const HeroSection = () => {
                   <img src="public/html.png" alt="" className="w-14 h-14" />
                   <img src="public/tailwind.png" alt="" className="w-14 h-14" />
                   <img
-                    src="public/js.png"
+                    src="public/reactjs.png"
                     alt="Javascript logo"
                     className="w-14 h-14 rounded-sm"
                   />

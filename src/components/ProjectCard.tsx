@@ -28,6 +28,9 @@ const ProjectCard = () => {
               >
                 En savoir plus
               </a>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-110">
+                test
+              </button>
             </div>
           </div>
 

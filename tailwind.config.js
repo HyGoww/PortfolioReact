@@ -5,7 +5,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}", // Fichiers JS, JSX, TS, et TSX dans le dossier src
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Kanit', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

@@ -4,8 +4,6 @@ import HeroSection from './components/HeroSection';
 import ProjectCard from './components/ProjectCard';
 import Footer from './components/Footer';
 import FetchGithub from './components/FetchGithub';
-import FormRegister from './components/FormRegister';
-import FormLogin from './components/FormLogin';
 
 const App = () => {
   return (

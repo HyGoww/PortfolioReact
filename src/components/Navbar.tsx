@@ -1,4 +1,13 @@
+import { motion, useSpring, useScroll } from 'motion/react';
+
 const Navbar = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
     <nav className="w-full h-20 bg-blue-50 shadow-sm fixed z-50 flex items-center justify-between px-4 md:px-8">
       <div className="flex items-center">
@@ -11,23 +20,43 @@ const Navbar = () => {
           Portfolio
         </span>
       </div>
-      <ul className="hidden md:flex flex-row gap-6 text-blue-900">
-        <a href="#home" className="hover:text-blue-700">
-          Accueil
-        </a>
-        <a href="#about" className="hover:text-blue-700">
-          A propos
-        </a>
-        <a href="#project" className="hover:text-blue-700">
-          Projets
-        </a>
-        <a href="#github-projects" className="hover:text-blue-700">
-          GitHub
-        </a>
+      <ul className="hidden md:flex flex-row items-center gap-6 text-blue-900 h-full">
+        <li className="h-full flex items-center">
+          <a href="#home" className="hover:text-blue-700">
+            Accueil
+          </a>
+        </li>
+        <li>
+          <a href="#about" className="hover:text-blue-700">
+            A propos
+          </a>
+        </li>
+        <li>
+          <a href="#project" className="hover:text-blue-700">
+            Projets
+          </a>
+        </li>
+        <li className="">
+          <a href="#github-projects" className="hover:text-blue-700">
+            GitHub
+          </a>
+        </li>
       </ul>
-      <button className="bg-blue-700 text-blue-100 hover:bg-blue-800 rounded-xl shadow py-3 px-3 hidden md:block">
-        Contactez-moi
-      </button>
+      <div></div>
+      <motion.div
+        id="scroll-indicator"
+        style={{
+          scaleX,
+          position: 'fixed',
+          top: '5rem',
+          left: 0,
+          right: 0,
+          height: 5,
+          originX: 0,
+          backgroundColor: '#1D4ED8',
+          zIndex: 40,
+        }}
+      />
     </nav>
   );
 };
